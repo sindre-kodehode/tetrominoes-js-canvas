@@ -1,7 +1,8 @@
 import { COLUMNS, ROWS, } from "./consts.js";
 
 export default class {
-  constructor() {
+  constructor( game ) {
+    this.game = game;
     this.blocks = [];
     this.grid = 
       new Array( ROWS    ).fill( null ).map( () =>
@@ -14,6 +15,11 @@ export default class {
       this.blocks.push( block );
       this.grid[ block.row ][ block.column ] = block;
     });
+
+    if ( this.grid[0].some( block => block ) ) {
+      this.game.isPaused   = true;
+      this.game.isGameOver = true;
+    }
   }
 
   collision( shape ) {
